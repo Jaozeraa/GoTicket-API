@@ -2,9 +2,12 @@ import 'reflect-metadata';
 import { injectable, inject } from 'tsyringe';
 
 import IEventsRepository from '@modules/events/repositories/IEventsRepository';
-import ITicketsRepository from '@modules/tickets/repositories/ITicketsRepository';
 import { isAfter } from 'date-fns';
 import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
+
+interface IRequest {
+  user_id: string;
+}
 
 @injectable()
 export default class ListEventsService {
@@ -14,8 +17,8 @@ export default class ListEventsService {
     @inject('StorageProvider')
     private storageProvider: IStorageProvider,
   ) {}
-  public async execute(): Promise<any> {
-    const events = await this.eventsRepository.findAll();
+  public async execute({ user_id }: IRequest): Promise<any> {
+    const events = await this.eventsRepository.findAllByOwnerId(user_id);
 
     const unavailableEvents = events.filter(
       event => !isAfter(new Date(event.date), new Date()),

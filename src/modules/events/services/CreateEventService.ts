@@ -57,6 +57,12 @@ export default class CreateEventService {
       throw new AppError('You cannot create an event for before now.', 400);
     }
 
+    if (available_tickets === 0) {
+      throw new AppError(
+        'You cannot create an event without available tickets',
+      );
+    }
+
     const filename = await this.storageProvider.saveFile(promo_image_filename);
 
     const event = await this.eventsRepository.create({

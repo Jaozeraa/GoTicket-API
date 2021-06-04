@@ -19,6 +19,12 @@ eventsRouter.post(
 
 eventsRouter.get('/', ensureAuthenticated, eventsController.index);
 
+eventsRouter.get(
+  '/details/:event_id',
+  ensureAuthenticated,
+  eventsController.show,
+);
+
 eventsRouter.delete(
   '/:event_id',
   ensureAuthenticated,
