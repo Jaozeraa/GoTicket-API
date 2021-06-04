@@ -1,4 +1,4 @@
 import { container } from 'tsyringe';
 
-import '@modules/users/providers';
+// import '@modules/users/providers';
 import './providers';

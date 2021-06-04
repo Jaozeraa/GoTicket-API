@@ -7,15 +7,25 @@
     "@types/express": "^4.17.12",
     "@types/multer": "^1.4.5",
     "@types/pg": "^8.6.0",
+    "ts-node-dev": "^1.1.6",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^4.3.2"
+  },
+  "scripts": {
+    "dev:server": "ts-node-dev --inspect -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/shared/infra/http/index.ts",
+    "typeorm": "ts-node-dev -r tsconfig-paths/register --transpile-only node_modules/typeorm/cli.js"
   },
   "dependencies": {
     "@types/cors": "^2.8.10",
     "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
     "multer": "^1.4.2",
     "pg": "^8.6.0",
     "rate-limiter-flexible": "^2.2.2",
-    "tsyringe": "^4.5.0"
+    "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.5.0",
+    "typeorm": "^0.2.34"
   }
 }
