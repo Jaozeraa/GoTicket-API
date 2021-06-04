@@ -2,17 +2,30 @@ import 'reflect-metadata';
 import { injectable, inject } from 'tsyringe';
 
 import IEventsRepository from '@modules/events/repositories/IEventsRepository';
-import Event from '../infra/typeorm/entities/Event';
+import ITicketsRepository from '@modules/tickets/repositories/ITicketsRepository';
 
 @injectable()
 export default class ListEventsService {
   constructor(
     @inject('EventsRepository')
     private eventsRepository: IEventsRepository,
+    @inject('TicketsRepository')
+    private ticketsRepository: ITicketsRepository,
   ) {}
-  public async execute(): Promise<Event[]> {
+  public async execute(): Promise<any> {
     const events = await this.eventsRepository.findAll();
 
-    return events;
+    const formattedEvents = await Promise.all(
+      events.map(async event => {
+        const tickets = await this.ticketsRepository.findAllByEventId(event.id);
+
+        return {
+          ...event,
+          tickets,
+        };
+      }),
+    );
+
+    return formattedEvents;
   }
 }
