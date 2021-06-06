@@ -28,6 +28,7 @@ export default class ShowEventService {
 
     const formattedEvent = {
       ...event,
+      promo_image_url: `${process.env.APP_API_URL}/files/${event.promo_image}`,
       tickets,
     };
 
